@@ -1,0 +1,15 @@
+---
+apiVersion: v1
+kind: Service                    # Type of kubernetes resource
+metadata:
+  name: appsassign     # Unique name of the resource
+  namespace: assignment
+spec:
+  type: NodePort                 # Expose the Pods by opening a port on each Node and proxying it to the service.
+  ports:                         # Take incoming HTTP requests on port 9090 and forward them to the targetPort of 8080
+  - name: http
+    port: 9090
+    targetPort: 8080
+  selector:
+    app: appsassign     # Map any pod with label `app=appsassign` to this service
+

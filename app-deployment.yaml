@@ -1,0 +1,31 @@
+---
+apiVersion: apps/v1                                           
+kind: Deployment                                     
+metadata:
+  name: appsassign                               #Unique name for the deployment
+  namespace: assignment                          #Name of Namespace
+  labels:                                        #Labels to be applied
+    app: appsassign
+spec:
+  replicas: 3                                 #How many replicas to run
+  selector:
+    matchLabels:                                #Deployment matching with the labels
+      app: appsassign
+  template:
+    metadata:
+      labels:
+        app: appsassign
+    spec:                                            #Details for the container which will run inside the pod
+      containers:
+      - name: appsassign
+        image: docker.io/arbaz17/assignment:appsassign
+        imagePullSecrets:
+        name: regcred
+        ports:
+        - containerPort: 8080
+        env:
+          - name: REDIS_HOST
+            value: redis-master
+          - name: REDIS_PORT
+            value: "6379"
+

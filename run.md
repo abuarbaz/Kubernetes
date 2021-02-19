@@ -1,14 +1,3 @@
-## Kubernetes service assignment
-
-The purpose of this exercise is to deploy app.py application to Kubernetes. 
-
-We would like the solution to do the following:
-
-* deploy app.py application to Kubernetes
-* have kubernetes manifest for python web server and Redis
-* follow best practices regarding security, high availability and observability
-
-
 ## Prerequisites to work on this Project
 
 * Make sure docker is installed on your machine
@@ -22,7 +11,7 @@ We would like the solution to do the following:
 
 ## Assuming you have the required versiones of kubernetes and docker installed
 
-1) git clone https://github.com/kubernetes/blob/master/app.py
+1) git clone https://github.com/smartrecruiters-coding/ia-kubernetes-service-arbaz-arbazmohammed/blob/master/app.py
 
 2) We need to build the docker image.
    docker build -t imagename .
@@ -49,11 +38,17 @@ You have the image build and push to the docker repository.
 
 * kubectl apply -f redis-master-deployment.yaml --namespace=assignment
 
-* kubectl apply -f redis-master-service.yaml --namespace=assignment
+* kubectl apply -f redis-master-service.yaml --namespace=assignment 
 
 * kubectl apply -f redis-slave-deployment.yaml --namespace=assignment
 
 * kubectl apply -f redis-slave-service.yaml --namespace=assignment
 
--- INSERT --                                                                                                                                                                        1,40          Top
+
+## To check the output
+
+* kubectl decribe pods
+
+* curl to one of the pod ip at port 8080
+
 
