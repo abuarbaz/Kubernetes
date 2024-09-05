@@ -1,41 +1,42 @@
+---
 name: Rotate
-
 on:
   workflow_dispatch:
     inputs:
       target_env:
-        description: "Target Azure Environment to deploy to."
+        description: Target Azure Environment to deploy to.
         required: true
         type: string
         default: dev
       employee_Id:
-        description: '8 Digit employee ID (required only for prod)'
+        description: 8 Digit employee ID (required only for prod)
         required: true
-        default: 'NA'
-
+        default: NA
 jobs:
   RotateStorageKeys:
     name: Rotate Storage Account Keys if older than 300 days
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
-
       - name: Azure CLI Login
         uses: azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
-
       - name: Check Storage Account Keys Age and Rotate if necessary
         id: rotate_keys
-        run: |
+        run: >
           # Set variables
+
           resource_group="${{secrets.AZURE_RESOURCE_GROUP}}"
+
           storage_account="${{secrets.AZURE_STORAGE_ACCOUNT}}"
+
           key_age_limit=30 # in days
 
+
           # Function to check and rotate a key if necessary
+
           check_and_rotate_key() {
               key_index=$1
               key_name=$2
@@ -68,8 +69,12 @@ jobs:
               fi
           }
 
+
           # Check and rotate the primary key if necessary
+
           check_and_rotate_key 0 "primary"
 
+
           # Check and rotate the secondary key if necessary
+
           check_and_rotate_key 1 "secondary"
